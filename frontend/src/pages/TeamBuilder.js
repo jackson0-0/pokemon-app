@@ -79,11 +79,14 @@ function TeamBuilder() {
     }
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:8000/analyze", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ team: team }),
-      });
+      const response = await fetch(
+        "https://pokemon-app-production-f79f.up.railway.app/analyze",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ team: team }),
+        },
+      );
       const data = await response.json();
       setAnalysis(data);
     } catch (err) {
