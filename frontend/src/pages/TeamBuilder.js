@@ -36,7 +36,7 @@ function TeamBuilder() {
     setLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:5001/pokemon/${searchName.toLowerCase()}`,
+        `https://pokemon-app-production-2be7.up.railway.app/pokemon/${searchName.toLowerCase()}`,
       );
       if (!response.ok) {
         setError("Pokemon not found");
@@ -93,7 +93,6 @@ function TeamBuilder() {
     }
   };
 
-  // save to server
   const saveTeam = async () => {
     setError(null);
     if (team.length === 0) {
@@ -105,11 +104,14 @@ function TeamBuilder() {
       return;
     }
     try {
-      const response = await fetch("http://localhost:5001/teams", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ teamName, pokemons: team }),
-      });
+      const response = await fetch(
+        "https://pokemon-app-production-2be7.up.railway.app/teams",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ teamName, pokemons: team }),
+        },
+      );
       if (!response.ok) {
         setError("Couldn't save team");
         return;
@@ -124,7 +126,6 @@ function TeamBuilder() {
 
   return (
     <main className="main">
-      {/* Search Section */}
       <section className="card search-card">
         <h2 className="card-title">Search Pokémon</h2>
         <div className="search-row">
@@ -148,7 +149,6 @@ function TeamBuilder() {
         {saveSuccess && <p className="success-msg">✅ Team Saved</p>}
       </section>
 
-      {/* Pokemon Result */}
       {pokemon && (
         <section className="card pokemon-card">
           <img
@@ -186,7 +186,6 @@ function TeamBuilder() {
         </section>
       )}
 
-      {/* Team Section */}
       {team.length > 0 && (
         <section className="card team-card">
           <h2 className="card-title">
@@ -218,7 +217,6 @@ function TeamBuilder() {
             ))}
           </div>
 
-          {/* Save Team */}
           <div className="save-team-row">
             <input
               className="search-input"
@@ -238,7 +236,6 @@ function TeamBuilder() {
         </section>
       )}
 
-      {/* Analysis */}
       {analysis && (
         <section className="card analysis-card">
           <h2 className="card-title">Team Analysis</h2>

@@ -6,34 +6,21 @@ function SavedTeams() {
   const [error, setError] = useState(null);
 
   const typeColors = {
-    fire: "#FF6B35",
-    water: "#4A90D9",
-    grass: "#5DBB63",
-    electric: "#F7DC6F",
-    psychic: "#FF69B4",
-    ice: "#AED6F1",
-    dragon: "#7B68EE",
-    dark: "#5D4037",
-    fairy: "#FFB7C5",
-    fighting: "#C0392B",
-    poison: "#8E44AD",
-    ground: "#D4AC0D",
-    flying: "#85C1E9",
-    bug: "#82E0AA",
-    rock: "#AAB7B8",
-    ghost: "#6C3483",
-    steel: "#717D7E",
-    normal: "#AAB7B8",
+    fire: "#FF6B35", water: "#4A90D9", grass: "#5DBB63",
+    electric: "#F7DC6F", psychic: "#FF69B4", ice: "#AED6F1",
+    dragon: "#7B68EE", dark: "#5D4037", fairy: "#FFB7C5",
+    fighting: "#C0392B", poison: "#8E44AD", ground: "#D4AC0D",
+    flying: "#85C1E9", bug: "#82E0AA", rock: "#AAB7B8",
+    ghost: "#6C3483", steel: "#717D7E", normal: "#AAB7B8",
   };
 
-  // fetch teams after server loads
   useEffect(() => {
     fetchTeams();
   }, []);
 
   const fetchTeams = async () => {
     try {
-      const response = await fetch("http://localhost:5001/teams");
+      const response = await fetch("https://pokemon-app-production-2be7.up.railway.app/teams");
       const data = await response.json();
       setTeams(data);
     } catch (err) {
@@ -43,18 +30,8 @@ function SavedTeams() {
     }
   };
 
-  if (loading)
-    return (
-      <main className="main">
-        <p>Loading saved teams...</p>
-      </main>
-    );
-  if (error)
-    return (
-      <main className="main">
-        <p className="error-msg">{error}</p>
-      </main>
-    );
+  if (loading) return <main className="main"><p>Loading saved teams...</p></main>;
+  if (error) return <main className="main"><p className="error-msg">{error}</p></main>;
 
   return (
     <main className="main">
@@ -68,27 +45,19 @@ function SavedTeams() {
             {teams.map((team) => (
               <div key={team._id} className="saved-team-item">
                 <p className="saved-team-name">{team.teamName}</p>
-                <p className="saved-team-count">
-                  {team.pokemons.length} Pokemon
-                </p>
+                <p className="saved-team-count">{team.pokemons.length} Pokemon</p>
 
                 <div className="team-grid" style={{ marginTop: "16px" }}>
                   {team.pokemons.map((p, index) => (
                     <div key={index} className="team-member">
-                      <img
-                        src={p.sprite}
-                        alt={p.name}
-                        className="team-sprite"
-                      />
+                      <img src={p.sprite} alt={p.name} className="team-sprite" />
                       <p className="team-name">{p.name}</p>
                       <div className="type-badges small">
                         {p.types.map((type) => (
                           <span
                             key={type}
                             className="type-badge small"
-                            style={{
-                              backgroundColor: typeColors[type] || "#aaa",
-                            }}
+                            style={{ backgroundColor: typeColors[type] || "#aaa" }}
                           >
                             {type}
                           </span>
